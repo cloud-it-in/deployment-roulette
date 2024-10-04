@@ -2,7 +2,7 @@ resource "aws_route53_record" "blue" {
   zone_id = aws_route53_zone.private_dns.id
   name    = "blue-green"
   type    = "CNAME"
-  ttl     = "5"
+  ttl     = 5
 
   weighted_routing_policy {
     weight = 2
