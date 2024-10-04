@@ -1,6 +1,6 @@
 #!/bin/bash
 
-DEPLOY_INCREMENTS=1
+DEPLOY_INCREMENTS=2
 
 function manual_verification {
   read -p "Continue deployment? (y/n) " answer
