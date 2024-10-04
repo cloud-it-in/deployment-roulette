@@ -9,7 +9,7 @@ resource "aws_route53_record" "blue" {
   }
 
   set_identifier = "blue"
-  records        = [kubernetes_service.green.status.[0].load_balancer.[0].ingress.[0].hostname]
+  records        = [kubernetes_service.blue.status.0.load_balancer.0.ingress.0.hostname]
   # https://github.com/hashicorp/terraform-provider-kubernetes/pull/1125
 }
 
