@@ -9,7 +9,7 @@ resource "aws_route53_record" "blue" {
   }
 
   set_identifier = "blue"
-  records        = [kubernetes_service.blue.status.load_balancer.ingress[0].hostname] # https://github.com/hashicorp/terraform-provider-kubernetes/pull/1125
+  records        = [kubernetes_service.[0]blue.status.load_balancer.ingress[0].hostname] # https://github.com/hashicorp/terraform-provider-kubernetes/pull/1125
 }
 
 resource "aws_route53_zone" "private_dns" {
