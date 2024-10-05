@@ -1,3 +1,6 @@
+locals {
+  ingress_hostname = length(kubernetes_service.blue.status[0].load_balancer[0].ingress) > 0 ? kubernetes_service.blue.status[0].load_balancer[0].ingress[0].hostname : "default.example.com"
+}
 resource "aws_route53_record" "blue" {
   zone_id = aws_route53_zone.private_dns.id
   name    = "blue-green"
@@ -9,7 +12,7 @@ resource "aws_route53_record" "blue" {
   }
 
   set_identifier = "blue"
-  records        = [kubernetes_service.blue.status.0.load_balancer.0.ingress.0.hostname]
+  records        = [local.ingress_hostname]
   # https://github.com/hashicorp/terraform-provider-kubernetes/pull/1125
 }
 
