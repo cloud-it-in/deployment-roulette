@@ -17,43 +17,20 @@
 #}
 
 
-locals {
-  ingress_hostname = length(kubernetes_service.green.status[0].load_balancer[0].ingress) > 0 ? kubernetes_service.green.status[0].load_balancer[0].ingress[0].hostname : "default.example.com"
-}
-# resource "aws_route53_record" "green" {
-#   zone_id = aws_route53_zone.private_dns.id
-#   name    = "blue-green.udacityproject.com"
-#   type    = "CNAME"
-#   ttl     = 5
-
-#   weighted_routing_policy {
-#     weight = 2
-#   }
-
-#   set_identifier = "green"
-#   records        = [local.ingress_hostname]
-#   # https://github.com/hashicorp/terraform-provider-kubernetes/pull/1125
-# }
-resource "aws_route53_zone" "private_dns" {
-  name    = "blue-green.udacityproject.com"
-  comment = "DNS for Udacity Projects"
-
-  resource "aws_route53_record" "green" {
-  zone_id = aws_route53_zone.private_dns.id
-  name    = "blue-green.udacityproject.com"
-  type    = "A"  # Change CNAME to A record
-  ttl     = 5
-
-  weighted_routing_policy {
-    weight = 2
-  }
-
-  set_identifier = "green"
-  alias {
-    name    = kubernetes_service.green.status[0].load_balancer[0].ingress[0].hostname  # Use the load balancer's hostname
-    zone_id = kubernetes_service.green.status[0].load_balancer[0].zone_id  # Reference the zone ID
-    evaluate_target_health = true
-  }
+ locals {
+   ingress_hostname = length(kubernetes_service.green.status[0].load_balancer[0].ingress) > 0 ? kubernetes_service.green.status[0].load_balancer[0].ingress[0].hostname : "default.example.com"
+ }
+ resource "aws_route53_record" "green" {
+   zone_id = aws_route53_zone.private_dns.id
+   name    = "blue-green"
+   type    = "CNAME"
+   ttl     = 5
+   weighted_routing_policy {
+     weight = 2
+   }
+   set_identifier = "green"
+   records        = [local.ingress_hostname]
+   # https://github.com/hashicorp/terraform-provider-kubernetes/pull/1125
 }
 
   vpc {
