@@ -14,7 +14,7 @@
 #   set_identifier = "blue"
 #   records        = [local.ingress_hostname]
 #   # https://github.com/hashicorp/terraform-provider-kubernetes/pull/1125
-}
+#}
 
 
 locals {
