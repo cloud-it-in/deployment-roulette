@@ -18,7 +18,7 @@ resource "aws_route53_record" "blue" {
 
 
 locals {
-  ingress_hostname = length(kubernetes_service.blue.status[0].load_balancer[0].ingress) > 0 ? kubernetes_service.green.status[0].load_balancer[0].ingress[0].hostname : "default.example.com"
+  ingress_hostname = length(kubernetes_service.green.status[0].load_balancer[0].ingress) > 0 ? kubernetes_service.green.status[0].load_balancer[0].ingress[0].hostname : "default.example.com"
 }
 resource "aws_route53_record" "green" {
   zone_id = aws_route53_zone.private_dns.id
