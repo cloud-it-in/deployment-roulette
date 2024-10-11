@@ -42,9 +42,9 @@
      module.project_eks
    ]
  }
- resource "kubernetes_service" "bloatware" {
+ resource "kubernetes_service" "green" {
    metadata {
-     name      = "bloatware"
+     name      = "green-svc"
      namespace = local.name
      annotations = {
        "service.beta.kubernetes.io/aws-load-balancer-type"            = "nlb"
@@ -53,7 +53,7 @@
    }
    spec {
      selector = {
-       app = "bloatware"
+       app = "green"
      }
      port {
        port        = 80
